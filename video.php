@@ -6,6 +6,14 @@
     <title>Video on Demand</title>
     <link rel="stylesheet" href="styl3.css">
 </head>
+<?php
+$conn = mysqli_connect('localhost', 'root', '', 'dane3');
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $q3 = "DELETE FROM produkty WHERE id=$id";
+    mysqli_query($conn, $q3);
+}
+?>
 
 <body>
     <header>
@@ -30,13 +38,30 @@
     <div id="polecamy">
         <h3>Polecamy</h3>
         <?php
-        //s1
+        $q1 = "SELECT id,nazwa,opis,zdjecie FROM produkty WHERE id=18 OR id=22 OR id=23 OR id=25";
+        $res1 = mysqli_query($conn, $q1);
+        foreach ($res1 as $row) {
+            echo "<div class='chunk'>";
+            echo "<h4>$row[id].$row[nazwa]</h4>";
+            echo "<img src='" . $row["zdjecie"] . "'alt='film'>";
+            echo "<p>$row[opis]</p>";
+            echo "</div>";
+        }
         ?>
     </div>
-    <div id="Fantastyczne">
+    <div id="fantastyczne">
         <h3>Filmy fantastyczne</h3>
         <?php
-        //s2
+        $q2 = "SELECT id,nazwa,opis,zdjecie FROM produkty WHERE Rodzaje_id=12";
+        $res2 = mysqli_query($conn, $q2);
+        foreach ($res2 as $row) {
+            echo "<div class='chunk'>";
+            echo "<h4>$row[id].$row[nazwa]</h4>";
+            echo "<img src='" . $row["zdjecie"] . "'alt='film'>";
+            echo "<p>$row[opis]</p>";
+            echo "</div>";
+        }
+        mysqli_close($conn);
         ?>
     </div>
     <footer>
